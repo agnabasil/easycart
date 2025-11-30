@@ -1,0 +1,99 @@
+<div class="container mx-auto px-4 py-32 flex flex-col items-center min-h-[60vh]">
+  <h1 class="text-4xl font-mono font-bold mb-8 text-center">
+    TRACK YOUR <span class="text-primary">ORDER</span>
+  </h1>
+
+  <div class="w-full max-w-md bg-white/5 p-8 rounded-2xl border border-white/10 mb-8">
+    <%= form_with url: track_path, method: :get, class: "flex flex-col gap-4" do |f| %>
+      <div>
+        <%= f.label :tracking_number, class: "block text-sm text-gray-400 mb-2" %>
+        <div class="relative">
+          <%= f.text_field :tracking_number, value: params[:tracking_number], placeholder: "e.g. EC-12345678", class: "w-full bg-black/50 border border-white/20 rounded-lg py-3 px-4 pl-10 focus:outline-none focus:border-primary text-white", required: true %>
+          <svg class="absolute left-3 top-3.5 w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+      </div>
+
+      <%= f.submit "Track Order", class: "w-full py-3 bg-primary text-black font-bold rounded-lg hover:bg-white transition-colors cursor-pointer" %>
+    <% end %>
+
+    <% if flash[:alert] %>
+      <div class="mt-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg flex items-center gap-3 text-red-400">
+        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p><%= flash[:alert] %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @order %>
+    <div class="w-full max-w-md bg-black/50 rounded-xl border border-white/10 p-6 animate-fade-in-up">
+      <div class="flex items-center justify-between mb-4">
+        <span class="text-gray-400 text-sm">Status</span>
+        <span class="font-bold px-3 py-1 rounded-full text-xs 
+          <%= @order.status == 'DELIVERED' ? 'bg-green-500/20 text-green-500' : 
+              @order.status == 'SHIPPED' ? 'bg-blue-500/20 text-blue-500' : 
+              @order.status == 'CANCELLED' ? 'bg-red-500/20 text-red-500' :
+              'bg-yellow-500/20 text-yellow-500' %>">
+          <%= @order.status %>
+        </span>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <!-- Order Confirmed -->
+        <div class="flex items-center gap-3">
+          <div class="p-2 rounded-full <%= @order.status != 'PENDING' ? 'bg-primary text-black' : 'bg-white/10 text-gray-500' %>">
+            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+          </div>
+          <div>
+            <p class="font-bold">Order Confirmed</p>
+            <p class="text-xs text-gray-500">We have received your order.</p>
+          </div>
+        </div>
+
+        <div class="w-0.5 h-6 bg-white/10 ml-4"></div>
+
+        <!-- Shipped -->
+        <div class="flex items-center gap-3">
+          <div class="p-2 rounded-full <%= ['SHIPPED', 'DELIVERED'].include?(@order.status) ? 'bg-primary text-black' : 'bg-white/10 text-gray-500' %>">
+            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
+            </svg>
+          </div>
+          <div>
+            <p class="font-bold">Shipped</p>
+            <p class="text-xs text-gray-500">Your order is on the way.</p>
+            <% if @order.courier_name.present? %>
+              <p class="text-xs text-gray-400 mt-1">via <%= @order.courier_name %></p>
+              <% if @order.courier_link.present? %>
+                <a href="<%= @order.courier_link %>" target="_blank" class="text-xs text-primary hover:underline">
+                  Track on Courier Site →
+                </a>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="w-0.5 h-6 bg-white/10 ml-4"></div>
+
+        <!-- Delivered -->
+        <div class="flex items-center gap-3">
+          <div class="p-2 rounded-full <%= @order.status == 'DELIVERED' ? 'bg-green-500 text-black' : 'bg-white/10 text-gray-500' %>">
+            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div>
+            <p class="font-bold">Delivered</p>
+            <p class="text-xs text-gray-500">Package has been delivered.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

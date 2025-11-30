@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap');
+
+:root {
+    /* Neon Cyan */
+    --primary: #00f0ff;
+    --primary-foreground: #000000;
+
+    /* Neon Purple */
+    --secondary: #7000ff;
+    --secondary-foreground: #ffffff;
+
+    /* Cyber Red */
+    --accent: #ff003c;
+    --accent-foreground: #ffffff;
+
+    /* Glassmorphism Card */
+    --card: rgba(255, 255, 255, 0.05);
+    --card-foreground: #ffffff;
+
+    /* Dark mode by default */
+    --background: #050505;
+    --foreground: #ededed;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+}
+
+/* Manual overrides to bypass build issues */
+.bg-primary {
+    background-color: #00f0ff;
+}
+
+.text-primary {
+    color: #00f0ff;
+}
+
+.border-primary {
+    border-color: #00f0ff;
+}
+
+.bg-secondary {
+    background-color: #7000ff;
+}
+
+.text-secondary {
+    color: #7000ff;
+}
+
+.bg-accent {
+    background-color: #ff003c;
+}
+
+.text-accent {
+    color: #ff003c;
+}
+
+.bg-hero-pattern {
+    background-image: linear-gradient(to right, #ffffff05 1px, transparent 1px), linear-gradient(to bottom, #ffffff05 1px, transparent 1px);
+    background-size: 24px 24px;
+}

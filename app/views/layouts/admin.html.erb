@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>EasyCart Admin</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= favicon_link_tag 'favicon.png' %>
+
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <style>
+      /* Hide number input arrows */
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none !important;
+        margin: 0 !important;
+        display: none !important;
+      }
+      input[type="number"] {
+        -moz-appearance: textfield !important;
+        appearance: textfield !important;
+      }
+      
+      /* Custom select dropdown styling */
+      select {
+        appearance: none !important;
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 9L1 4h10z'/%3E%3C/svg%3E") !important;
+        background-repeat: no-repeat !important;
+        background-position: right 0.75rem center !important;
+        background-size: 12px !important;
+        padding-right: 2.5rem !important;
+      }
+    </style>
+  </head>
+
+  <body class="bg-black text-white font-sans antialiased">
+    <div class="flex min-h-screen">
+      <!-- Sidebar -->
+      <aside class="w-64 bg-white/5 border-r border-white/10 p-6 flex flex-col">
+        <div class="mb-10">
+          <h1 class="text-2xl font-mono font-bold text-primary">EASYCART</h1>
+          <p class="text-xs text-gray-500">ADMIN PORTAL</p>
+        </div>
+
+        <nav class="flex-1 space-y-2">
+          <%= link_to admin_dashboard_index_path, class: "flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 #{request.path.include?('dashboard') ? 'bg-white/10 text-primary' : 'text-gray-400'}" do %>
+            <span>Dashboard</span>
+          <% end %>
+
+          <%= link_to admin_products_path, class: "flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 #{request.path.include?('products') ? 'bg-white/10 text-primary' : 'text-gray-400'}" do %>
+            <span>Products</span>
+          <% end %>
+
+          <%= link_to admin_orders_path, class: "flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 #{request.path.include?('orders') ? 'bg-white/10 text-primary' : 'text-gray-400'}" do %>
+            <span>Orders</span>
+          <% end %>
+        </nav>
+
+        <div class="mt-auto pt-6 border-t border-white/10">
+          <p class="text-xs text-gray-600">Logged in as Admin</p>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 p-8 overflow-y-auto">
+        <% flash.each do |type, message| %>
+          <div class="mb-6 px-4 py-3 rounded-lg shadow-lg text-sm font-bold animate-fade-in-up
+            <%= type == 'notice' ? 'bg-green-500/20 text-green-500 border border-green-500/50' : 'bg-red-500/20 text-red-500 border border-red-500/50' %>">
+            <%= message %>
+          </div>
+        <% end %>
+        <%= yield %>
+      </main>
+    </div>
+  </body>
+</html>

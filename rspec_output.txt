@@ -1,0 +1,160 @@
+*****.FFFF.FFFFFFFFFFF.FFF........FF.....
+
+Pending: (Failures listed here are expected and do not affect your suite's status)
+
+  1) CartItem add some examples to (or delete) /Users/agnabasil/Documents/agnabasil/workspace/playground/easycart_rails/spec/models/cart_item_spec.rb
+     # Not yet implemented
+     # ./spec/models/cart_item_spec.rb:4
+
+  2) Cart add some examples to (or delete) /Users/agnabasil/Documents/agnabasil/workspace/playground/easycart_rails/spec/models/cart_spec.rb
+     # Not yet implemented
+     # ./spec/models/cart_spec.rb:4
+
+  3) OrderItem add some examples to (or delete) /Users/agnabasil/Documents/agnabasil/workspace/playground/easycart_rails/spec/models/order_item_spec.rb
+     # Not yet implemented
+     # ./spec/models/order_item_spec.rb:4
+
+  4) Order add some examples to (or delete) /Users/agnabasil/Documents/agnabasil/workspace/playground/easycart_rails/spec/models/order_spec.rb
+     # Not yet implemented
+     # ./spec/models/order_spec.rb:4
+
+  5) Product add some examples to (or delete) /Users/agnabasil/Documents/agnabasil/workspace/playground/easycart_rails/spec/models/product_spec.rb
+     # Not yet implemented
+     # ./spec/models/product_spec.rb:4
+
+Failures:
+
+  1) Admin::Orders GET /index returns http success
+     Failure/Error: expect(response).to have_http_status(:success)
+       expected the response to have a success status code (2xx) but it was 404
+     # ./spec/requests/admin/orders_spec.rb:7:in 'block (3 levels) in <main>'
+
+  2) Admin::Orders GET /show returns http success
+     Failure/Error: expect(response).to have_http_status(:success)
+       expected the response to have a success status code (2xx) but it was 404
+     # ./spec/requests/admin/orders_spec.rb:14:in 'block (3 levels) in <main>'
+
+  3) Admin::Orders GET /update returns http success
+     Failure/Error: expect(response).to have_http_status(:success)
+       expected the response to have a success status code (2xx) but it was 404
+     # ./spec/requests/admin/orders_spec.rb:21:in 'block (3 levels) in <main>'
+
+  4) Admin::Products GET /index returns http success
+     Failure/Error: expect(response).to have_http_status(:success)
+       expected the response to have a success status code (2xx) but it was 404
+     # ./spec/requests/admin/products_spec.rb:7:in 'block (3 levels) in <main>'
+
+  5) Admin::Products GET /create returns http success
+     Failure/Error: expect(response).to have_http_status(:success)
+       expected the response to have a success status code (2xx) but it was 404
+     # ./spec/requests/admin/products_spec.rb:21:in 'block (3 levels) in <main>'
+
+  6) Admin::Products GET /edit returns http success
+     Failure/Error: expect(response).to have_http_status(:success)
+       expected the response to have a success status code (2xx) but it was 404
+     # ./spec/requests/admin/products_spec.rb:28:in 'block (3 levels) in <main>'
+
+  7) Admin::Products GET /update returns http success
+     Failure/Error: expect(response).to have_http_status(:success)
+       expected the response to have a success status code (2xx) but it was 404
+     # ./spec/requests/admin/products_spec.rb:35:in 'block (3 levels) in <main>'
+
+  8) Admin::Products GET /destroy returns http success
+     Failure/Error: expect(response).to have_http_status(:success)
+       expected the response to have a success status code (2xx) but it was 404
+     # ./spec/requests/admin/products_spec.rb:42:in 'block (3 levels) in <main>'
+
+  9) CartItems GET /create returns http success
+     Failure/Error: expect(response).to have_http_status(:success)
+       expected the response to have a success status code (2xx) but it was 404
+     # ./spec/requests/cart_items_spec.rb:7:in 'block (3 levels) in <main>'
+
+  10) CartItems GET /update returns http success
+      Failure/Error: expect(response).to have_http_status(:success)
+        expected the response to have a success status code (2xx) but it was 404
+      # ./spec/requests/cart_items_spec.rb:14:in 'block (3 levels) in <main>'
+
+  11) CartItems GET /destroy returns http success
+      Failure/Error: expect(response).to have_http_status(:success)
+        expected the response to have a success status code (2xx) but it was 404
+      # ./spec/requests/cart_items_spec.rb:21:in 'block (3 levels) in <main>'
+
+  12) Carts GET /show returns http success
+      Failure/Error: expect(response).to have_http_status(:success)
+        expected the response to have a success status code (2xx) but it was 404
+      # ./spec/requests/carts_spec.rb:7:in 'block (3 levels) in <main>'
+
+  13) Checkouts GET /new returns http success
+      Failure/Error: expect(response).to have_http_status(:success)
+        expected the response to have a success status code (2xx) but it was 404
+      # ./spec/requests/checkouts_spec.rb:7:in 'block (3 levels) in <main>'
+
+  14) Checkouts GET /create returns http success
+      Failure/Error: expect(response).to have_http_status(:success)
+        expected the response to have a success status code (2xx) but it was 404
+      # ./spec/requests/checkouts_spec.rb:14:in 'block (3 levels) in <main>'
+
+  15) Contacts GET /index returns http success
+      Failure/Error: expect(response).to have_http_status(:success)
+        expected the response to have a success status code (2xx) but it was 404
+      # ./spec/requests/contacts_spec.rb:7:in 'block (3 levels) in <main>'
+
+  16) Products GET /index returns http success
+      Failure/Error: expect(response).to have_http_status(:success)
+        expected the response to have a success status code (2xx) but it was 404
+      # ./spec/requests/products_spec.rb:7:in 'block (3 levels) in <main>'
+
+  17) Products GET /show returns http success
+      Failure/Error: expect(response).to have_http_status(:success)
+        expected the response to have a success status code (2xx) but it was 404
+      # ./spec/requests/products_spec.rb:14:in 'block (3 levels) in <main>'
+
+  18) Tracks GET /index returns http success
+      Failure/Error: expect(response).to have_http_status(:success)
+        expected the response to have a success status code (2xx) but it was 404
+      # ./spec/requests/tracks_spec.rb:7:in 'block (3 levels) in <main>'
+
+  19) Cart and Checkout allows adding items to cart and checking out
+      Failure/Error: expect(page).to have_content('YOUR CART')
+        expected to find text "YOUR CART" in "EASYCART\nHome\nCollections\nTrack Order\nContact\n1\nItem added to cart.\nFILTERS\nAll Products\nSpecial Offers\nWearables\nALL PRODUCTS\nNewest First\nWEARABLES\nTest Phone\n₹1,000\nView Details\nAdd to Cart\nEASYCART\nThe future of electronics shopping. Premium gadgets, minimalist design, seamless WhatsApp checkout.\nShop\nAll Products\nPhones\nLaptops\nAudio\nSupport\nTrack Order\nFAQ\nContact Us\n© 2025 EasyCart. All rights reserved."
+
+      [Screenshot Image]: /Users/agnabasil/Documents/agnabasil/workspace/playground/easycart_rails/tmp/capybara/failures_r_spec_example_groups_cart_and_checkout_allows_adding_items_to_cart_and_checking_out_210.png
+
+
+      # ./spec/system/cart_checkout_spec.rb:14:in 'block (2 levels) in <main>'
+
+  20) Landing Page displays the hero section and featured collections
+      Failure/Error: expect(page).to have_content('FUTURE OF TECH')
+        expected to find text "FUTURE OF TECH" in "EASYCART\nHome\nCollections\nTrack Order\nContact\nNEXT GEN ELECTRONICS\nDiscover the latest gadgets and accessories designed for the modern lifestyle. Premium quality, unbeatable performance.\nShop Now\nView Offers\nCOLLECTIONS\nView All\nSmartphones\nExplore Collection →\nLaptops\nExplore Collection →\nAudio\nExplore Collection →\nWearables\nExplore Collection →\nEASYCART\nThe future of electronics shopping. Premium gadgets, minimalist design, seamless WhatsApp checkout.\nShop\nAll Products\nPhones\nLaptops\nAudio\nSupport\nTrack Order\nFAQ\nContact Us\n© 2025 EasyCart. All rights reserved."
+
+      [Screenshot Image]: /Users/agnabasil/Documents/agnabasil/workspace/playground/easycart_rails/tmp/capybara/failures_r_spec_example_groups_landing_page_displays_the_hero_section_and_featured_collections_644.png
+
+
+      # ./spec/system/landing_page_spec.rb:11:in 'block (2 levels) in <main>'
+
+Finished in 11.83 seconds (files took 0.4888 seconds to load)
+41 examples, 20 failures, 5 pending
+
+Failed examples:
+
+rspec ./spec/requests/admin/orders_spec.rb:5 # Admin::Orders GET /index returns http success
+rspec ./spec/requests/admin/orders_spec.rb:12 # Admin::Orders GET /show returns http success
+rspec ./spec/requests/admin/orders_spec.rb:19 # Admin::Orders GET /update returns http success
+rspec ./spec/requests/admin/products_spec.rb:5 # Admin::Products GET /index returns http success
+rspec ./spec/requests/admin/products_spec.rb:19 # Admin::Products GET /create returns http success
+rspec ./spec/requests/admin/products_spec.rb:26 # Admin::Products GET /edit returns http success
+rspec ./spec/requests/admin/products_spec.rb:33 # Admin::Products GET /update returns http success
+rspec ./spec/requests/admin/products_spec.rb:40 # Admin::Products GET /destroy returns http success
+rspec ./spec/requests/cart_items_spec.rb:5 # CartItems GET /create returns http success
+rspec ./spec/requests/cart_items_spec.rb:12 # CartItems GET /update returns http success
+rspec ./spec/requests/cart_items_spec.rb:19 # CartItems GET /destroy returns http success
+rspec ./spec/requests/carts_spec.rb:5 # Carts GET /show returns http success
+rspec ./spec/requests/checkouts_spec.rb:5 # Checkouts GET /new returns http success
+rspec ./spec/requests/checkouts_spec.rb:12 # Checkouts GET /create returns http success
+rspec ./spec/requests/contacts_spec.rb:5 # Contacts GET /index returns http success
+rspec ./spec/requests/products_spec.rb:5 # Products GET /index returns http success
+rspec ./spec/requests/products_spec.rb:12 # Products GET /show returns http success
+rspec ./spec/requests/tracks_spec.rb:5 # Tracks GET /index returns http success
+rspec ./spec/system/cart_checkout_spec.rb:9 # Cart and Checkout allows adding items to cart and checking out
+rspec ./spec/system/landing_page_spec.rb:8 # Landing Page displays the hero section and featured collections
+

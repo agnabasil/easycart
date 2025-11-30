@@ -1,0 +1,77 @@
+<div class="container mx-auto px-4 py-32">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+    <!-- Image Gallery -->
+    <div class="space-y-4">
+      <div class="aspect-square bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <img src="<%= product_image_url(@product) %>" alt="<%= @product.title %>" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='<%= asset_path('placeholder.svg') %>';">
+      </div>
+      <div class="grid grid-cols-4 gap-4">
+        <% @product.images.drop(1).each do |image| %>
+          <div class="aspect-square bg-white/5 border border-white/10 rounded-lg overflow-hidden cursor-pointer hover:border-primary transition-colors">
+            <img src="<%= image %>" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='<%= asset_path('placeholder.svg') %>';">
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Product Info -->
+    <div>
+      <div class="mb-8">
+        <p class="text-primary font-mono mb-2 uppercase tracking-wider"><%= @product.category %></p>
+        <h1 class="text-4xl md:text-5xl font-bold font-mono mb-4"><%= @product.title %></h1>
+        
+        <div class="flex items-end gap-4 mb-6">
+          <% if @product.discounted_price.present? %>
+            <span class="text-3xl font-bold text-primary"><%= format_price(@product.discounted_price) %></span>
+            <span class="text-xl text-gray-400 line-through"><%= format_price(@product.price) %></span>
+            <span class="px-3 py-1 bg-primary/20 text-primary text-sm font-bold rounded-full">
+              <%= number_to_percentage(((@product.price - @product.discounted_price) / @product.price) * 100, precision: 0) %> OFF
+            </span>
+          <% else %>
+            <span class="text-3xl font-bold"><%= format_price(@product.price) %></span>
+          <% end %>
+        </div>
+
+        <p class="text-gray-400 leading-relaxed mb-8">
+          <%= @product.description %>
+        </p>
+
+        <!-- Add to Cart -->
+        <% if @product.stock > 0 %>
+          <%= form_with url: cart_items_path, method: :post, class: "flex gap-4" do |f| %>
+            <%= f.hidden_field :product_id, value: @product.id %>
+            <div class="w-32">
+              <%= f.number_field :quantity, value: 1, min: 1, max: @product.stock, class: "w-full bg-black border border-white/20 rounded-lg py-3 px-4 text-center focus:outline-none focus:border-primary text-white" %>
+            </div>
+            <%= f.button class: "flex-1 bg-primary text-black font-bold py-3 rounded-lg hover:bg-white transition-colors cursor-pointer" do %>
+              ADD TO CART
+            <% end %>
+          <% end %>
+        <% else %>
+          <div class="w-full py-4 bg-white/10 text-gray-500 text-center font-bold rounded-lg cursor-not-allowed">
+            OUT OF STOCK
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Features/Specs (Static for now, can be dynamic later) -->
+      <div class="border-t border-white/10 pt-8">
+        <h3 class="font-bold mb-4">Product Features</h3>
+        <ul class="space-y-2 text-gray-400">
+          <li class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Premium Build Quality
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            1 Year Warranty
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Free Shipping
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

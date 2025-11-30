@@ -1,0 +1,68 @@
+<div class="mb-8">
+  <h2 class="text-3xl font-bold mb-2">Dashboard</h2>
+  <p class="text-gray-400">Overview of your store's performance.</p>
+</div>
+
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+  <div class="bg-white/5 border border-white/10 p-6 rounded-2xl">
+    <h3 class="text-gray-400 text-sm mb-2">Total Sales</h3>
+    <p class="text-3xl font-mono font-bold text-primary"><%= format_price(@total_sales) %></p>
+  </div>
+  
+  <div class="bg-white/5 border border-white/10 p-6 rounded-2xl">
+    <h3 class="text-gray-400 text-sm mb-2">Total Orders</h3>
+    <p class="text-3xl font-mono font-bold text-white"><%= @total_orders %></p>
+  </div>
+
+  <div class="bg-white/5 border border-white/10 p-6 rounded-2xl">
+    <h3 class="text-gray-400 text-sm mb-2">Total Products</h3>
+    <p class="text-3xl font-mono font-bold text-white"><%= @total_products %></p>
+  </div>
+</div>
+
+<!-- Recent Orders -->
+<div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+  <div class="p-6 border-b border-white/10 flex justify-between items-center">
+    <h3 class="font-bold text-lg">Recent Orders</h3>
+    <%= link_to "View All", admin_orders_path, class: "text-primary text-sm hover:underline" %>
+  </div>
+  
+  <div class="overflow-x-auto">
+    <table class="w-full text-left">
+      <thead class="bg-white/5 text-gray-400 text-xs uppercase">
+        <tr>
+          <th class="px-6 py-4">Order ID</th>
+          <th class="px-6 py-4">Customer</th>
+          <th class="px-6 py-4">Status</th>
+          <th class="px-6 py-4">Total</th>
+          <th class="px-6 py-4">Date</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-white/10">
+        <% @recent_orders.each do |order| %>
+          <tr class="hover:bg-white/5 transition-colors">
+            <td class="px-6 py-4 font-mono text-sm">#<%= order.id %></td>
+            <td class="px-6 py-4"><%= order.customer_name %></td>
+            <td class="px-6 py-4">
+              <span class="px-2 py-1 rounded-full text-xs font-bold 
+                <%= order.status == 'DELIVERED' ? 'bg-green-500/20 text-green-500' : 
+                    order.status == 'SHIPPED' ? 'bg-blue-500/20 text-blue-500' : 
+                    order.status == 'CANCELLED' ? 'bg-red-500/20 text-red-500' :
+                    'bg-yellow-500/20 text-yellow-500' %>">
+                <%= order.status %>
+              </span>
+            </td>
+            <td class="px-6 py-4"><%= format_price(order.total_price) %></td>
+            <td class="px-6 py-4 text-gray-400 text-sm"><%= order.created_at.strftime("%b %d, %Y") %></td>
+          </tr>
+        <% end %>
+        <% if @recent_orders.empty? %>
+          <tr>
+            <td colspan="5" class="px-6 py-8 text-center text-gray-500">No orders found.</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

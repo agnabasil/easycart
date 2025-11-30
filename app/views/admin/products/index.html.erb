@@ -1,0 +1,52 @@
+<div class="flex justify-between items-center mb-8">
+  <div>
+    <h2 class="text-3xl font-bold mb-2">Products</h2>
+    <p class="text-gray-400">Manage your product catalog.</p>
+  </div>
+  <%= link_to "Add Product", new_admin_product_path, class: "bg-primary text-black px-6 py-3 rounded-lg font-bold hover:bg-white transition-colors" %>
+</div>
+
+<div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+  <div class="overflow-x-auto">
+    <table class="w-full text-left">
+      <thead class="bg-white/5 text-gray-400 text-xs uppercase">
+        <tr>
+          <th class="px-6 py-4">Image</th>
+          <th class="px-6 py-4">Title</th>
+          <th class="px-6 py-4">Category</th>
+          <th class="px-6 py-4">Price</th>
+          <th class="px-6 py-4">Stock</th>
+          <th class="px-6 py-4 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-white/10">
+        <% @products.each do |product| %>
+          <tr class="hover:bg-white/5 transition-colors">
+            <td class="px-6 py-4">
+              <div class="w-12 h-12 bg-gray-800 rounded-lg overflow-hidden">
+                <% if product.images.present? %>
+                  <img src="<%= product.images.first %>" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='<%= asset_path('placeholder.svg') %>';">
+                <% end %>
+              </div>
+            </td>
+            <td class="px-6 py-4 font-bold"><%= product.title %></td>
+            <td class="px-6 py-4 text-sm text-gray-400 uppercase"><%= product.category %></td>
+            <td class="px-6 py-4">
+              <% if product.discounted_price.present? %>
+                <span class="text-gray-400 line-through text-xs mr-1"><%= format_price(product.price) %></span>
+                <span class="text-primary font-bold"><%= format_price(product.discounted_price) %></span>
+              <% else %>
+                <%= format_price(product.price) %>
+              <% end %>
+            </td>
+            <td class="px-6 py-4"><%= product.stock %></td>
+            <td class="px-6 py-4 text-right space-x-2">
+              <%= link_to "Edit", edit_admin_product_path(product), class: "text-gray-400 hover:text-white" %>
+              <%= button_to "Delete", admin_product_path(product), method: :delete, class: "text-red-500 hover:text-red-400", form: { class: "inline-block" }, data: { turbo_confirm: "Are you sure?" } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

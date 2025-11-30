@@ -1,0 +1,91 @@
+<%= form_with(model: [:admin, product], class: "space-y-6 max-w-2xl") do |form| %>
+  <% if product.errors.any? %>
+    <div class="bg-red-500/10 border border-red-500/20 p-4 rounded-lg text-red-400 mb-6">
+      <h3 class="font-bold mb-2"><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h3>
+      <ul class="list-disc list-inside text-sm">
+        <% product.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div>
+      <%= form.label :title, class: "block text-sm text-gray-400 mb-2" %>
+      <%= form.text_field :title, placeholder: "e.g. iPhone 15 Pro", class: "w-full bg-black/50 border border-white/20 rounded-lg py-3 px-4 focus:outline-none focus:border-primary text-white" %>
+    </div>
+
+    <div>
+      <%= form.label :slug, class: "block text-sm text-gray-400 mb-2" %>
+      <%= form.text_field :slug, placeholder: "e.g. iphone-15-pro", class: "w-full bg-black/50 border border-white/20 rounded-lg py-3 px-4 focus:outline-none focus:border-primary text-white" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div>
+      <%= form.label :price, class: "block text-sm text-gray-400 mb-2" %>
+      <%= form.number_field :price, step: "0.01", placeholder: "999.00", class: "w-full bg-black/50 border border-white/20 rounded-lg py-3 px-4 focus:outline-none focus:border-primary text-white" %>
+    </div>
+
+    <div>
+      <%= form.label :discounted_price, class: "block text-sm text-gray-400 mb-2" %>
+      <%= form.number_field :discounted_price, step: "0.01", placeholder: "899.00 (optional)", class: "w-full bg-black/50 border border-white/20 rounded-lg py-3 px-4 focus:outline-none focus:border-primary text-white" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div>
+      <%= form.label :category, class: "block text-sm text-gray-400 mb-2" %>
+      <%= form.select :category, ['phones', 'laptops', 'audio', 'wearables'], {}, class: "w-full bg-black/50 border border-white/20 rounded-lg py-3 px-4 focus:outline-none focus:border-primary text-white" %>
+    </div>
+
+    <div>
+      <%= form.label :stock, class: "block text-sm text-gray-400 mb-2" %>
+      <%= form.number_field :stock, placeholder: "50", class: "w-full bg-black/50 border border-white/20 rounded-lg py-3 px-4 focus:outline-none focus:border-primary text-white" %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.label :description, class: "block text-sm text-gray-400 mb-2" %>
+    <%= form.text_area :description, rows: 4, placeholder: "Enter product description...", class: "w-full bg-black/50 border border-white/20 rounded-lg py-3 px-4 focus:outline-none focus:border-primary text-white" %>
+  </div>
+
+  <div>
+    <%= form.label :images, "Image URLs (comma separated)", class: "block text-sm text-gray-400 mb-2" %>
+    <div class="flex gap-4 items-start">
+      <div class="flex-1">
+        <input type="text" id="product_images_input" name="product[images][]" value="<%= product.images&.join(', ') %>" class="w-full bg-black/50 border border-white/20 rounded-lg py-3 px-4 focus:outline-none focus:border-primary text-white" placeholder="https://example.com/image1.jpg, https://example.com/image2.jpg">
+        <p class="text-xs text-gray-500 mt-1">Enter valid image URLs separated by commas.</p>
+      </div>
+      <div class="w-24 h-24 bg-gray-800 rounded-lg overflow-hidden border border-white/10 flex-shrink-0">
+        <img id="product_image_preview" src="<%= product.images&.first || asset_path('placeholder.svg') %>" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='<%= asset_path('placeholder.svg') %>';">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const input = document.getElementById('product_images_input');
+      const preview = document.getElementById('product_image_preview');
+      const placeholder = '<%= asset_path('placeholder.svg') %>';
+
+      function updatePreview() {
+        const urls = input.value.split(',').map(url => url.trim()).filter(url => url.length > 0);
+        if (urls.length > 0) {
+          preview.src = urls[0];
+        } else {
+          preview.src = placeholder;
+        }
+      }
+
+      input.addEventListener('input', updatePreview);
+      input.addEventListener('change', updatePreview);
+    });
+  </script>
+
+  <div class="flex gap-4 pt-4">
+    <%= form.submit class: "bg-primary text-black px-8 py-3 rounded-lg font-bold hover:bg-white transition-colors cursor-pointer" %>
+    <%= link_to "Cancel", admin_products_path, class: "px-8 py-3 border border-white/20 rounded-lg font-bold hover:bg-white/5 transition-colors text-center" %>
+  </div>
+<% end %>

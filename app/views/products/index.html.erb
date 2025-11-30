@@ -1,0 +1,152 @@
+<div class="container mx-auto px-4 py-32">
+  <div class="flex flex-col md:flex-row gap-8">
+    <!-- Sidebar Filters -->
+    <aside class="w-full md:w-64 flex-shrink-0">
+      <div class="sticky top-32">
+        <h3 class="text-xl font-bold font-mono mb-6">FILTERS</h3>
+        
+        <div class="space-y-2">
+          <%= link_to "All Products", products_path, class: "block px-4 py-2 rounded-lg transition-colors #{params[:category].blank? ? 'bg-primary text-black font-bold' : 'text-gray-400 hover:text-white hover:bg-white/5'}" %>
+          
+          <%= link_to "Special Offers", products_path(category: 'offers'), class: "block px-4 py-2 rounded-lg transition-colors #{params[:category] == 'offers' ? 'bg-primary text-black font-bold' : 'text-gray-400 hover:text-white hover:bg-white/5'}" %>
+          
+          <% @categories.each do |category| %>
+            <%= link_to category.titleize, products_path(category: category), class: "block px-4 py-2 rounded-lg transition-colors #{params[:category] == category ? 'bg-primary text-black font-bold' : 'text-gray-400 hover:text-white hover:bg-white/5'}" %>
+          <% end %>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Product Grid -->
+    <div class="flex-1">
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold font-mono">
+          <% if params[:category] == 'offers' %>
+            SPECIAL <span class="text-primary">OFFERS</span>
+          <% elsif params[:category].present? %>
+            <%= params[:category].upcase %>
+          <% else %>
+            ALL <span class="text-primary">PRODUCTS</span>
+          <% end %>
+        </h1>
+
+        <!-- Sort Dropdown -->
+        <!-- Sort Dropdown -->
+        <form action="<%= products_path %>" method="get" id="sort-form" class="flex items-center gap-2">
+          <% if params[:category].present? %>
+            <input type="hidden" name="category" value="<%= params[:category] %>">
+          <% end %>
+          <input type="hidden" name="sort" id="sort-input" value="<%= params[:sort] || 'newest' %>">
+          
+          <div class="relative" id="custom-dropdown">
+            <button type="button" id="dropdown-button" class="flex items-center gap-2 bg-black/50 border border-white/20 rounded-full pl-6 pr-4 py-3 text-sm font-bold text-white hover:bg-white/5 transition-all min-w-[200px] justify-between">
+              <span id="dropdown-label">
+                <% if params[:sort] == 'price_asc' %>
+                  Price: Low to High
+                <% elsif params[:sort] == 'price_desc' %>
+                  Price: High to Low
+                <% else %>
+                  Newest First
+                <% end %>
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+
+            <div id="dropdown-menu" class="hidden absolute right-0 mt-2 w-full bg-[#1a1a1a] border border-white/10 rounded-xl shadow-xl overflow-hidden z-50">
+              <div class="p-1 space-y-1">
+                <button type="button" class="w-full text-left px-4 py-2 rounded-lg text-sm font-medium transition-colors <%= (params[:sort].blank? || params[:sort] == 'newest') ? 'bg-primary text-black' : 'text-gray-300 hover:bg-white/10' %>" onclick="selectSort('newest')">
+                  Newest First
+                </button>
+                <button type="button" class="w-full text-left px-4 py-2 rounded-lg text-sm font-medium transition-colors <%= params[:sort] == 'price_asc' ? 'bg-primary text-black' : 'text-gray-300 hover:bg-white/10' %>" onclick="selectSort('price_asc')">
+                  Price: Low to High
+                </button>
+                <button type="button" class="w-full text-left px-4 py-2 rounded-lg text-sm font-medium transition-colors <%= params[:sort] == 'price_desc' ? 'bg-primary text-black' : 'text-gray-300 hover:bg-white/10' %>" onclick="selectSort('price_desc')">
+                  Price: High to Low
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <script>
+          function selectSort(value) {
+            document.getElementById('sort-input').value = value;
+            document.getElementById('sort-form').submit();
+          }
+
+          document.addEventListener('DOMContentLoaded', function() {
+            const button = document.getElementById('dropdown-button');
+            const menu = document.getElementById('dropdown-menu');
+            
+            if (button && menu) {
+              button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                menu.classList.toggle('hidden');
+              });
+
+              document.addEventListener('click', function(e) {
+                if (!button.contains(e.target) && !menu.contains(e.target)) {
+                  menu.classList.add('hidden');
+                }
+              });
+            }
+          });
+        </script>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% @products.each do |product| %>
+          <div data-testid="product-card" class="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-300">
+            <!-- Image -->
+            <div class="relative aspect-square bg-gray-800 overflow-hidden">
+              <img src="<%= product_image_url(product) %>" alt="<%= product.title %>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.onerror=null;this.src='<%= asset_path('placeholder.svg') %>';">
+              
+              <% if product.stock <= 0 %>
+                <div class="absolute top-4 right-4 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                  OUT OF STOCK
+                </div>
+              <% elsif product.discounted_price.present? %>
+                <div class="absolute top-4 right-4 bg-primary text-black text-xs font-bold px-3 py-1 rounded-full">
+                  SALE
+                </div>
+              <% end %>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6">
+              <p class="text-xs text-gray-400 uppercase mb-2"><%= product.category %></p>
+              <h3 class="text-lg font-bold mb-2 group-hover:text-primary transition-colors line-clamp-1"><%= product.title %></h3>
+              
+              <div class="flex items-end justify-between mb-4">
+                <div class="flex flex-col">
+                  <% if product.discounted_price.present? %>
+                    <span class="text-sm text-gray-400 line-through"><%= format_price(product.price) %></span>
+                    <span class="text-xl font-bold text-primary"><%= format_price(product.discounted_price) %></span>
+                  <% else %>
+                    <span class="text-xl font-bold"><%= format_price(product.price) %></span>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3">
+                <%= link_to "View Details", product_path(product), class: "px-4 py-2 border border-white/20 rounded-lg text-center text-sm font-bold hover:bg-white/10 transition-colors" %>
+                <% if product.stock > 0 %>
+                  <%= button_to "Add to Cart", cart_items_path(product_id: product.id, quantity: 1), method: :post, class: "w-full px-4 py-2 bg-white text-black rounded-lg text-center text-sm font-bold hover:bg-gray-200 transition-colors cursor-pointer" %>
+                <% else %>
+                  <button disabled class="w-full px-4 py-2 bg-white/10 text-gray-500 rounded-lg text-center text-sm font-bold cursor-not-allowed">Out of Stock</button>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      
+      <% if @products.empty? %>
+        <div class="text-center py-20">
+          <p class="text-gray-400 text-lg">No products found in this category.</p>
+          <%= link_to "View All Products", products_path, class: "inline-block mt-4 text-primary hover:underline" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
