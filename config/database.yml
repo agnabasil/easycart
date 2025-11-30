@@ -81,18 +81,16 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: easycart_rails_production
-    username: easycart_rails
-    password: <%= ENV["EASYCART_RAILS_DATABASE_PASSWORD"] %>
+    url: <%= ENV["DATABASE_URL"] %>
   cache:
     <<: *primary_production
-    database: easycart_rails_production_cache
+    url: <%= ENV["DATABASE_URL"] %>
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: easycart_rails_production_queue
+    url: <%= ENV["DATABASE_URL"] %>
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: easycart_rails_production_cable
+    url: <%= ENV["DATABASE_URL"] %>
     migrations_paths: db/cable_migrate
