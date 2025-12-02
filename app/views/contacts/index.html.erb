@@ -146,15 +146,15 @@
           const form = event.target;
           const formData = new FormData(form);
           
-          const message = `New Contact Form Submission:%0A%0A` +
-            `Name: ${formData.get('name')}%0A` +
-            `Email: ${formData.get('email')}%0A` +
-            `Phone: ${formData.get('phone')}%0A` +
-            `Subject: ${formData.get('subject')}%0A%0A` +
-            `Message:%0A${formData.get('message')}`;
+          const message = "New Contact Form Submission:\n\n" +
+            "Name: " + formData.get('name') + "\n" +
+            "Email: " + formData.get('email') + "\n" +
+            "Phone: " + formData.get('phone') + "\n" +
+            "Subject: " + formData.get('subject') + "\n\n" +
+            "Message:\n" + formData.get('message');
           
           // Redirect to WhatsApp (you can change this number)
-          window.location.href = `https://wa.me/917907542340?text=${message}`;
+          window.location.href = `https://wa.me/<%= ENV.fetch('ADMIN_PHONE_NUMBER', '917907542340') %>?text=${encodeURIComponent(message)}`;
         }
       </script>
     </div>

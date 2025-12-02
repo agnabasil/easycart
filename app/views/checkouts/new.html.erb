@@ -3,7 +3,7 @@
     <h1 class="text-3xl font-mono font-bold mb-8 text-center">CHECKOUT</h1>
 
     <div class="bg-white/5 border border-white/10 rounded-2xl p-8">
-      <%= form_with(model: @order, url: checkout_path, class: "space-y-6") do |f| %>
+      <%= form_with(model: @order, url: checkout_path, class: "space-y-6", data: { turbo: false }) do |f| %>
         <% if @order.errors.any? %>
           <div class="bg-red-500/10 border border-red-500/20 p-4 rounded-lg text-red-400 mb-6">
             <ul class="list-disc list-inside text-sm">

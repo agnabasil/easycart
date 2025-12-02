@@ -20,3 +20,5 @@ services:
         value: "true"
       - key: WEB_CONCURRENCY
         value: "1" # Keep low for free tier
+      - key: ADMIN_PHONE_NUMBER
+        value: "917907542340"
