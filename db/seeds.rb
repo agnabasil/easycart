@@ -213,7 +213,7 @@ products_data.each do |product_attrs|
 end
 
 # Orders
-statuses = [ 'PENDING', 'SHIPPED', 'DELIVERED', 'CANCELLED' ]
+statuses = [ 'PENDING', 'CONFIRMED', 'SHIPPED', 'DELIVERED', 'CANCELLED' ]
 
 15.times do
   status = statuses.sample

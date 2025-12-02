@@ -106,7 +106,7 @@
       <%= form_with(model: [:admin, @order], class: "space-y-4") do |f| %>
         <div>
           <%= f.label :status, class: "block text-sm text-gray-400 mb-2" %>
-          <%= f.select :status, ['PENDING', 'SHIPPED', 'DELIVERED', 'CANCELLED'], {}, class: "w-full bg-black/50 border border-white/20 rounded-lg py-2 px-3 focus:outline-none focus:border-primary text-white" %>
+          <%= f.select :status, ['PENDING', 'CONFIRMED', 'SHIPPED', 'DELIVERED', 'CANCELLED'], {}, class: "w-full bg-black/50 border border-white/20 rounded-lg py-2 px-3 focus:outline-none focus:border-primary text-white" %>
         </div>
         <div>
           <%= f.label :tracking_number, class: "block text-sm text-gray-400 mb-2" %>
