@@ -8,6 +8,6 @@ module ApplicationHelper
   end
 
   def format_price(amount)
-    number_to_currency(amount, unit: "₹", precision: 0, format: "%u%n")
+    number_to_currency(amount)
   end
 end
